@@ -1,0 +1,65 @@
+<script>
+         //四、运算符
+         console.log(3+2);   //=>5加号
+        console.log(3-2);    //=>1减号
+        console.log(3*2);    //=>6乘
+        console.log(3/2);    //1.5除
+        console.log("3"+"2");       //"32":+字符串连接
+
+        var count = 0;
+        console.log(count++);   //=>0
+        console.log(count--);   //=>1
+        console.log(count += 3);    //=>3
+        console.log(count *= 5);    //=>15
+
+        //相等关系运算符用来判断两值是否相等
+        //不等，大于，小于运算符的运算结果是true或false
+
+        var x=3, y=4;           //这里的等号是赋值
+        console.log(x==y);      //=>false
+        console.log(x!=y);      //=>true
+        console.log(x<y);       //=>true
+        console.log(x<=y);      //=>true
+        console.log(x>y);       //=>false
+        console.log(x>=y);       //=>false
+        console.log("three" == "four");  //=>false:两个字符串不相等
+        console.log("three" > "four");  //=>true:"th"在字母表中的索引大于"fo"
+        console.log(false == (x>y));    //=>true
+
+        //逻辑运算符是对布尔值的合并或求反
+        console.log((x==3)&&(y==4));    //=>true
+        console.log((x>4)||(y<4));   //=>false
+        console.log(!(x==y));       //=>true
+
+        //五、函数
+        function plus1(x){
+            return x+1;
+        }
+        console.log(plus1(y));      //5
+        
+        var square = function(x){
+            return x*x;
+        };
+        console.log(square(plus1(y)));      //25
+
+
+        //当将函数和对象结合在一起写时，函数就变成了”方法“
+        //当将函数赋值给对象的属行，就成为方法
+        var a = [];
+        a.push(1,2,3);
+        a.reverse();
+
+        //我们也可以定义自己的方法，”this"关键字是对定义方法的对象的引用
+        var points = [
+            {x:0, y:0},
+            {x:1, y:1}
+        ];
+        points.dist = function(){       //定义一个方法来计算两点之间的距离
+            var p1 = this[0];           //通过this获得对当前数组的引用
+            var p2 = this[1];           //并取得调用的当前数组的两个元素
+            var a = p2.x-p1.x;          //X坐标轴上的距离
+            var b = p2.y-p1.y;          //Y坐标轴上的距离
+            return Math.sqrt(a*a+b*b);  //通过勾股定理，用Math.sqrt()来计算平方根
+        };
+        console.log(points.dist());     //=>1.4142135623730951
+    </script>
