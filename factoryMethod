@@ -1,0 +1,38 @@
+<script>
+        // 工厂方法模式
+
+        // 安全模式类：可以屏蔽使用这对类的错误使用造成的错误，比如对于一个类的创建（Demo），
+        // 我们需要在有new关键字的（比如：var d = new Demo())，然后其他人不知道这个对象是一个类，那么在使用时
+        // 就容易忽略new关键字直接执行类（var d = Demo())，这时我们得到的并不是我们预期的对象
+
+        var Demo = function(){
+            if(!(this instanceof Demo)){
+                return new Demo();
+            }
+        }
+        Demo.prototype = {
+            show : function(){
+                console.log('成功获取');
+            }
+        }
+        var d = new Demo();
+        d.show();               //成功获取
+
+        // var d = Demo();
+        // d.show();           //Uncaught ReferenceError: newDemo is not defined
+
+
+        //解决办法就是：在构造函数开始先判断当前对象this指代是不是类（Demo)，如果是则通过new关键字创建对象，
+        // 如果不是则说明类在全局作用域中执行，那么在全局作用域中执行当然this就指向window了，
+        // 这样我们就要重新返回新创建的对象了
+    
+        //在Demo里加入如下： 
+        // var Demo = function(){
+        //     if(!(this instanceof Demo)){
+        //         return new Demo();
+        //     }
+        // }
+        var d = Demo();
+        d.show();           //成功获取
+        
+    </script>
