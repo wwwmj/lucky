@@ -1,0 +1,45 @@
+ <script>
+        //六.条件判断和循环
+        function abs(x){        //求绝对值的函数，if语句
+            if(x>=0){
+                return x;
+            }else{
+                return -x;
+            }
+        }
+        function factorial(n){      //计算阶乘的函数，使用while求阶乘
+            var product = 1;
+            while (n>1) {
+                product *= n;
+                n--;
+            }
+            return product;
+        }
+        console.log(factorial(4));      //=>24:1*2*3*4=24
+
+        function factorial2(n){         //使用for循环求阶乘
+            var i,product = 1;
+            for(i=2;i<=n;i++){
+                product *= i; 
+            }
+            return product;
+        }
+        console.log(factorial2(5));     //=>120:1*2*3*4*5=120
+
+        //定义一个构造函数以初始化一个新的point对象
+        function Point(x,y){    //构造函数均以大写字母开始
+            this.x=x;           //关键字this指代初始化的实例
+            this.y=y            //将函数参数存储为对象的属性
+        }                       //不需要return
+
+        //使用new关键字和构造函数来创建一个实例
+        var p = new Point(1,1);         //平面几何中的点（1，1）
+
+        //通过给构造函数的prototype对象赋值
+        // 来给Point对象定义方法
+        Point.prototype.r = function(){
+            return Math.sqrt(this.x*this.x+this.y*this.y);
+        };
+        //Point的实例对象p继承了方法r()
+        console.log(p.r())          //1.4142135623730951
+    </script>
