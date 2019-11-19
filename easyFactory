@@ -1,0 +1,91 @@
+<script>
+        //简单工厂模式：比如将创建的多个类封装到一个函数里，
+        //当我需要用时，就记住这个函数，然后通过这个函数创建我需要的对象。
+
+
+        //篮球基类
+        var Basketball = function(){
+            this.intro = '篮球盛行于美国';
+        }
+        Basketball.prototype = {
+            getMember : function(){
+                console.log('每个队伍需要5名队员');
+            },
+            getBallSize : function(){
+                console.log('篮球很大');
+            }
+        }
+
+        //足球基类
+        var Football = function(){
+            this.intro = '足球在世界范围内很流行';
+        }
+        Football.prototype = {
+            getMember : function(){
+                console.log('每个队伍需要11名队员');
+                return 123456789
+            },
+            getBallSize : function(){
+                console.log('足球很大');
+            }
+        }
+
+        //网球基类
+        var Tennis = function(){
+            this.intro = '每年有很多网球系列赛';
+        }
+        Tennis.prototype = {
+            getMember : function(){
+                console.log('每个队伍需要1名队员');
+            },
+            getBallSize : function(){
+                console.log('网球很小');
+            }
+        }
+
+        //运动工厂
+        var SportFactory = function(name){
+            switch(name){
+                case 'NBA':
+                    return new Basketball();
+                case 'worldCup':
+                    return new Football();
+                case 'FrenchOpen':
+                    return new Tennis();
+            }
+        }
+
+        //当我要调用时，
+        //为世界杯创建一个足球，只需要运动工厂SportFactory，调用并创建
+        var football = SportFactory('worldCup');
+        console.log(football);                              //Football {intro: "足球在世界范围内很流行"}   intro: "足球在世界范围内很流行"   __proto__: Object
+        console.log(football.intro);                        //足球在世界范围内很流行
+        console.log(football.getMember(), '<<<<<<<71');     //每个队伍需要11名队员    //123456789 "<<<<<<<71"
+
+
+        //简单工厂模式还可以用来创建对象
+        //例子：书类，创建一个对象，然后通过这个对象大量拓展方法和属性，并最终将对象返回出来
+        //工厂模式
+        function bookCreate(name,time,type){
+            var o = new Object();
+            o.name = name;
+            o.time = time;
+            o.type = type;
+            o.getName = function(){
+                console.log(this.name)
+            }
+            return o
+        }
+        var book1 = bookCreate("js book",2014,"js");
+        var book2 = bookCreate("css book",2013,"css");
+
+
+        //这里会输出js book和underfined,为什么会输出underfined呢？
+        //因为调用这个函数，输出的是这个函数本身，比如里面的console，
+        //而函数有一个返回值，即使你没有设置return,也会有一个返回值，没有设置的话就是underfined
+        console.log(book1.getName());       //js book   //underfined
+        console.log(book2.getName());       //css book   //underfined
+
+        
+
+    </script>
