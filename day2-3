@@ -1,0 +1,53 @@
+//类型转换： 
+        console.log(10+"objects");  // 10objects:数字10转换为字符串
+        console.log("7"+"4");       //74:两个数字均转换为数字
+
+        var n = 1 - "x";            // NaN：字符串"x"无法转换为数字
+        console.log(n+"objects");   //NaNobjects：NaN转换为字符串”NaN“
+
+
+        //"=="相等运算符这个结果为true,在判断两个值是否相等时做了哪些类型转换;而”===“恒等运算符在判断相等时并未做任何类型转换
+        console.log(null == undefined);     //true
+        console.log(null === undefined);    //false
+        console.log("0" == 0);              //true
+        console.log("0" === 0);             //false
+        console.log(0 == false);            //true
+        console.log(0 === false);           //false
+        console.log("0" == false);          //true
+        console.log("0" === false);         //false
+
+        //显式类型转换
+        //使用Boolean(),Number(),String()或Object()函数，当不通过new运算符调用这些函数时，它们会作为类型转换函数做类型转换。
+
+        console.log(Number("3"));   //3
+        console.log(String(false)); //false
+        console.log(Boolean([]));   //true
+        console.log(Object(3))      //Number{3}:new Number(3)
+        //除了null和undefined之外的任何值都具有toString()方法，这个方法的执行结果通常和toString()方法的返回结果一致
+        //如果试图把null或undefined转换为对象，则会抛出一个类型错误(typeError)，Object()函数在这种情况下不会抛出异常
+        //它仅简单地返回一个新创建的空对象
+
+
+
+        //Number类定义的toString()方法可以接收表示转换基数，如果不指定此参数，转换规则将是基于十进制，同样，亦可以将数字转换为其他进制数(范围在2~26之间)
+        var n = 17;
+        binary_string = n.toString(2);
+        console.log(binary_string);     //10001
+        octal_string = "0" + n.toString(8);
+        console.log(octal_string);      //021
+        hex_string = "0x" + n.toString(16);
+        console.log(hex_string);        //0x11
+
+
+        //在做到数字到字符串的转换过程中，控制输出中小数点位数和有效数字，或者决定是否需要指数记数法。
+        //Number类为这种数字到字符串的类型转换场景定义了三个方法，toFixed()
+        var m = 123456.789;
+        console.log(m.toFixed(0));  //123457
+        console.log(m.toFixed(2));  //123456.79
+        console.log(m.toFixed(5));  //123456.78900
+        console.log(m.toExponential(1));    //1.2e+5
+        console.log(m.toExponential(3));    //1.235e+5
+        console.log(m.toPrecision(4));      //1.235e+5
+        console.log(m.toPrecision(7));      //123456.8
+        console.log(m.toPrecision(10));     //123456.7890
+        //只能基于十进制数进行转换，并且不能出现非法的尾随字符。
