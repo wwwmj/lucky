@@ -1,0 +1,67 @@
+<script>
+        //通过原型继承创建一个新对象
+        function inherit(p){
+            //p是一个对象，但不能是null
+            if(p == null) throw TypeError();
+            //如果Object.create()存在
+            if (Object.create)
+            //直接使用它
+                return Object.create(p);
+            //否则进行进一步检测
+            var t = typeof p;
+            if(t !== "object" && t !== "function") throw TypeError();
+            //定义一个空的构造函数
+            function f(){};
+            //将其原型属性设置为p
+            f.prototype = p;
+            //使用f()创建p的继承对象
+            return new f();
+        }
+
+        //js对象具有"自有属性"(own prototype),也有一些属性是从原型对象继承而来的
+        //假设要查询对象o的属性x，如果o不存在x,那么将会继续在o的原型对象中查询属性x。如果原型对象中也没有x，但这个原型对象也由原型
+        //那么继续在这个原型对象的原型上执行查询，直到找到x或者查找到一个原型是null的对象为止。
+        //对象的原型属性构成了一个“链”，通过这个“链”可以实现属性的继承。
+
+
+        //o从Object.prototype继承对象的方法
+        var o = {};
+        //给o定义一个属性x
+        o.x = 1;
+        //p继承o和Object.prototype
+        var p = inherit(o);
+        //给p定义一个属性y
+        p.y = 2;
+        //q继承p,o和Object.prototype
+        var q = inherit(p);
+        //给q定义一个属性z
+        q.z = 3;
+        //toString继承自Object.prototype
+        var s = q.toString();
+        //x和y分别继承自o和p
+        console.log(q.x + q.y)      //3
+        console.log(q.x + q.y + q.z)    //6
+
+        console.log(s.x)        //undefined
+        console.log(s.y)        //undefined
+        console.log(s.z)        //undefined
+        console.log(s.x + s.y)  //NaN
+
+        //每个对象都有一个 toString() 方法，当该对象被表示为一个文本值时，
+        // 或者一个对象以预期的字符串方式引用时自动调用。默认情况下，toString() 方法被每个 Object 对象继承。
+        // 如果此方法在自定义对象中未被覆盖，toString() 返回 "[object type]"，其中 type 是对象的类型。
+        console.log(s)          //[object Object]:q是一个对象
+
+
+        //一个用来继承的对象
+        var unitcircle = { r:1 };
+        //c继承属性r
+        var c = inherit(unitcircle);
+        //c定义两个属性
+        c.x = 1;
+        c.y = 1;
+        //c覆盖继承来的属性
+        c.r = 2;
+        //原型对象没有修改
+        console.log(unitcircle.r)   //1
+    </script>
