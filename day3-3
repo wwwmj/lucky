@@ -1,0 +1,57 @@
+<script>
+        //通过原型继承创建一个新对象
+        function inherit(p){
+            //p是一个对象，但不能是null
+            if(p == null) throw TypeError();
+            //如果Object.create()存在
+            if (Object.create)
+            //直接使用它
+                return Object.create(p);
+            //否则进行进一步检测
+            var t = typeof p;
+            if(t !== "object" && t !== "function") throw TypeError();
+            //定义一个空的构造函数
+            function f(){};
+            //将其原型属性设置为p
+            f.prototype = p;
+            //使用f()创建p的继承对象
+            return new f();
+        }
+
+        //js对象可以看做属性的集合，我们经常会检测集合中成员的从属关系--判断某个属性是否存在于某个对象中。
+        //可以通过in运算符，hasOwnProperty()和propertyIsEnumerable()方法来完成这个工作
+        var o = { x:1 };
+        console.log("x" in o);          //true:"x"是o的属性
+        console.log("y" in o);          //false:"y"是o的属性
+        console.log("toString" in o)    //true:o继承"toString"属性
+
+        //hasOwnProperty()方法用来检测给定的名字是否是对象的自有属性，对于继承属性它将返回false
+        var u = { x:1 };
+        console.log(u.hasOwnProperty("x"));     //true
+        console.log(u.hasOwnProperty("y"));     //false
+        console.log(u.hasOwnProperty("toString"))//false
+
+        //propertyIsEnumerable()是hasOwnProperty()的增强版，只有检测到时自有属性且这个属性的可枚举性为true
+        //时它才返回true，某些内置属性是不可枚举的。
+        var h = inherit({y:2});
+        h.x = 1;
+        console.log(h.propertyIsEnumerable("x"));           //true
+        console.log(h.propertyIsEnumerable("y"))            //true
+        console.log(Object.prototype.propertyIsEnumerable("toString"))      //false
+
+        //使用" !== "判断一个属性是否是undefined
+        var r = {x:1};
+        console.log(o.x !== undefined);         //true
+        console.log(o.y !== undefined);         //true
+        console.log(o.toString !== undefined);  //true
+
+        //然而只有一种场景只能使用in运算符而不能使用!==,in可以区分不存在的属性和存在但值为undefined的属性。
+        var t = {x:undefined};
+        console.log(t.x !== undefined);       //false
+        console.log(t.y !== undefined);       //false  
+        console.log("x" in t);          //true
+        console.log("y" in t);       //false
+        console.log(delete t.x);     //true
+        console.log("x" in t)       //false
+
+    </script>
