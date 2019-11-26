@@ -1,0 +1,34 @@
+ <script>
+        //delete运算符可以删除对象的属性，delete只是断开属性和宿主对象的联系，而不会去操作属性中的属性[1]。
+        o = { x:1 };
+        console.log(delete o.x);            //true
+        console.log(delete o.x);            //true
+        console.log(delete o.toString);     //true
+        console.log(delete 1);              //true
+
+
+        //[1]:删除a.p之后，b.x依旧是1，删除的属性的引用依然存在，所以在某些实现中，可能因为这种不严谨的代码而造成内存泄漏
+        //所以在销毁对象的时候，要遍历属性中的属性，依次删除
+        a = { p:{x:1} };
+        b = a.p;
+        console.log(delete a.p);            //true
+        console.log(b.x)                    //1
+
+
+        //delete不能删除那些可配置性为false的属性，(尽管可以删除不可扩展对象的可配置属性)。某些内置对象的属性是不可配置的。
+        //比如通过变量声明和函数声明创建的全局对象的属性，在严格模式中，删除一个不可配置属性会报一个类型错误，在非严格模式中。
+        //在这些情况下的delete操作会返回flase.
+        console.log(delete Object.prototype)    //false
+        var x = 1;
+        console.log(delete this.x)              //false
+        function f() {}
+        console.log(delete this.f)              //false
+
+        //在非严格模式下删除全局对象的可配置性时，可以省略对全局对象的引用，直接在delete操作符后跟随要删除的属性名。
+        this.x = 1;
+        console.log(delete x)
+
+        //在严格模式下，delete后跟随一个非法操作数，会报一个语法错误，因此必须显式指定对象及其属性。
+        console.log(delete x);
+        console.log(delete this.x)
+    </script>
