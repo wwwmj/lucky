@@ -1,0 +1,52 @@
+<script>
+        //数组方法
+        //一.Array.join()方法将数组中的所有元素都转化为字符串并连接在一起，返回最后生成的字符串。
+        //可以指定一个可选的字符串在生成的字符串中来分隔数组的各个元素，如果不指定分隔符，默认使用逗号
+        var a = [1,2,3];
+        console.log(a.join());      //1,2,3
+        console.log(a.join(" "));   //1 2 3
+        console.log(a.join(""));    //123
+        var b = new Array(10);
+        console.log(b.join('-'));   //---------:9个连字号组成的字符串
+        //将数组转化为字符串
+
+        //Array.join()方法是String.split()方法的逆向操作，后者是将字符串分割成若干块来创建一个数组
+
+        //二.Array.reverse()方法将数组中的元素颠倒顺序，返回逆序的数组
+        var a = [1,2,3]
+        console.log(a.reverse().join())     //3,2,1
+
+        //三.Array.sotr()方法将数组中的元素排序并返回排序后的数组，当不带参数调用sort()时，数组元素以字母表顺序排序
+        var a = new Array("banana","cherry","apple");
+        console.log(a.sort());      //["apple","banana","cherry"]:数组的
+        a.sort();
+        var s = a.join(", ");   
+        console.log(s)              //apple, banana, cherry:字符串的
+
+        //如果要按照其他方式而非字母表顺序进行数组排序，必须给sort()方法传递一个比较函数，
+        //该函数决定了它的两个参数在排好序的数组中的先后顺序，假设第一个参数应该在前，比较函数应该返回一个小于0的数值。
+        //反之，假设第一个参数应该在后，函数应该返回一个大于0的数值，并且，假设两个值相等，函数应该返回0，
+        //例如：用数值大小而非字母表顺序进行数组排序
+
+        var a = [33,4,1111,222];
+        console.log(a.sort());      //[1111, 222, 33, 4]
+        console.log(a.sort(function(a,b){
+            return a-b
+        }));                        //[4, 33, 222, 1111]
+        console.log(a.sort(function(a,b){
+            return b-a
+        }))                         //[1111, 222, 33, 4]
+        
+
+        //对一个字符串数组执行不区分大小写的字母表排序，比较函数首先将函数都转化为小写字符串
+        a = ['ant','Bug','cat','Dog']
+        console.log(a.sort())           //["Bug", "Dog", "ant", "cat"]
+        console.log(a.sort(function(s,t){
+            var a = s.toLowerCase();
+            var b = t.toLowerCase();
+            if(a<b) return -1;
+            if(a>b) return 1;
+            return 0
+        }))                             //["ant", "Bug", "cat", "Dog"]
+
+    </script>
