@@ -1,0 +1,98 @@
+<script>
+        //1.forEach()从头到尾遍历数组，为每个元素调用指定的函数。传递的函数作为forEach()的第一个参数，然后
+        //forEach()使用三个参数调用该函数：数组元素，元素的索引和数组本身。
+        var data = [1,2,3,4,5];
+        var sum = 0;
+        data.forEach(function(value){
+            sum += value
+        })
+        console.log(sum);       //15
+        data.forEach(function(v,i,a){
+            a[i] = v+1
+        })
+        console.log(data)       //[2, 3, 4, 5, 6]
+
+        //forEach()无法在所有元素都传递给调用的函数之前终止遍历，没有像for循环中使用的相应的break语句，如果要提前终止，
+        //必须把forEach()放在一个try块中，并能抛出一个异常
+        function foreach(a,f,t){
+            try{ 
+                a.forEach(f,t)
+                }catch(e){
+                    if(e === foreach.break) return
+                    else throw e
+                }
+        }
+        foreach.break = new Error("StopIteration")
+
+
+        //2.Map()方法将调用的数组的每个元素传递给指定的函数，并返回一个数组，它包含该函数的返回值。
+        //Map()返回的是新数组，它不修改调用的数组
+        a = [1,2,3];
+        b = a.map(function(x){
+            console.log( x*x )      //1 4 9
+        })
+
+        //3.filter()方法返回的数组元素是调用的数组的一个子集，该函数返回true或false
+        a = [5,4,3,2,1]
+        smallvalues = a.filter(function(x){
+            console.log(x<3)            //3个false,2个true
+        })
+        everyother = a.filter(function(x,i){
+            console.log( i%2 == 0)      //true  false  true  false true
+        })
+
+        //filter()会跳过稀疏数组中缺少的元素，它返回数组总是稠密的，为了压缩稀疏数组的空缺
+        // var dense = sparse.filter(function(){
+        //     return true
+        // })
+        //甚至，压缩空缺并删除undefined和null元素
+        a = a.filter(function(x){
+            return x !== undefined && x != null
+        })
+
+
+        //4.every()和some()
+        //是数组方法的逻辑判定，它们对于数组元素应用指定的函数进行判定，返回true或false
+
+        //every()方法就像数学中的"针对所有"的量词(倒A):当且仅当针对数组中的所有元素调用判定函数都返回true,它才返回true
+        a = [1,2,3,4,5]
+        console.log(a.every(function(x){
+            return x<10
+        }))                             //true:所有值都小于10
+        console.log(a.every(function(x){
+            return x%2 === 0
+        }))                             //false:不是所有值都是偶数
+
+        //some()方法就像数学中的"存在"的量词(倒E):当数组中至少有一个元素调用判定函数返回true,它就返回true，
+        //当且仅当数值中的所有元素调用判定函数都返回false,它才返回false
+        a = [1,2,3,4,5]
+        console.log(a.some(function(x){
+            return x%2 === 0
+        }))                         //true:a含有偶数值
+        console.log(a.some(isNaN))  //false:a不包含非数值元素
+
+        //一旦every()和some()确认该返回什么值它们就会停止遍历数组元素
+        //在空数组上调用时，every()返回true,some()返回false
+
+
+        //5.indexOf()和lastIndexOf()
+        //搜索整个数组中具有给定值得元素，返回找到的第一个元素的索引或者如果没有找到就返回-1
+        //indexOf()从头至尾搜索，而lastIndexOf()则反向搜索
+        a = [0,1,2,1,0]
+        console.log(a.indexOf(1))       //1:索引,a[1]
+        console.log(a.lastIndexOf(1))   //3:a[3]
+        console.log(a.indexOf(3))       //-1:在数组里没有找到3
+
+        //在数组里没有查找所有出现的x，并返回一个包含匹配索引的数组
+        function findall(a,x){
+            var results = [], len = a.length, pos = 0;
+            while(pos<len){
+                pos = a.indexOf(x,pos);
+                if(pos === -1) break;
+                results.push(pos);
+                pos = pos +1;
+            }
+            return results;
+        }
+
+    </script>
